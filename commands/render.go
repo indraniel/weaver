@@ -34,11 +34,25 @@ func init() {
 }
 
 func (opts RenderCmdOpts) main(args []string) {
+	CheckExists(opts.outDir)
+
 	for _, file := range args {
 		fmt.Println("Processing --", file)
+		CheckExists(inputFile)
 		render.RenderFile(file, opts.OutDir)
 	}
+
+	fmt.Println("All Done!")
 }
 
 func (opts RenderCmdOpts) processOpts() {
+}
+
+func CheckExists(file string) {
+	if _, err := os.Stat(file); os.IsNotExist(err) {
+		log.Fatalf(
+			"Could not find '%d' on file system: %s",
+			file, err,
+		)
+	}
 }

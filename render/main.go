@@ -9,6 +9,7 @@ import (
 
 func RenderFile(inputFile, outDir string) {
 	fmt.Println("Rendering", inputFile)
+
 	extension := filepath.Ext(inputFile)
 	switch extension {
 	case ".md":
@@ -35,8 +36,8 @@ func RenderRMarkdownFile(inputFile, outDir string) {
 }
 
 func RenderMarkdownFile(inputFile, outDir string) {
-	doc := ParseMarkdownFile(inputFile)
-	doc.ProcessMarkdown()
-	doc.renderHTML()
+	doc := NewDocument(inputFile)
+	doc.ParseDocument()
+	doc.RenderHTML()
 	doc.Save(outDir)
 }
