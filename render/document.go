@@ -1,9 +1,12 @@
 package render
 
 import (
+	"html/template"
 	"io/ioutil"
 	"log"
+	"os"
 	"path"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -15,7 +18,7 @@ type Document struct {
 	BaseName  string
 	Title     string
 	RawBody   string
-	HTMLBody  string
+	HTMLBody  template.HTML
 	FullHTML  string
 	Date      time.Time
 	Params    map[string]string
@@ -24,16 +27,14 @@ type Document struct {
 func ParseMarkdownFile(inputFile string) {
 }
 
-func NewDocument(inputFile) *Document {
+func NewDocument(inputFile string) *Document {
 	basename := path.Base(inputFile)
-	doc = new(
-		Document{
-			InputFile: inputFile,
-			BaseName:  basename,
-			Date:      time.Now(),
-			Params:    make(map[string]string),
-		},
-	)
+	doc := &Document{
+		InputFile: inputFile,
+		BaseName:  basename,
+		Date:      time.Now(),
+		Params:    make(map[string]string),
+	}
 	return doc
 }
 
@@ -43,29 +44,29 @@ func (d *Document) ParseDocument() {
 		log.Fatalf("Couldn't read file: '%s': %s", d.InputFile, err)
 	}
 	startContentLine := d.parseHeader(data)
-	d.parseContents(startContentLine)
+	d.parseContents(data, startContentLine)
 }
 
 func (d *Document) parseHeader(data []byte) int {
 	lines := strings.Split(string(data), "\n")
 
 	headerState := 0
-	startMdContentLine = 0
+	startMdContentLine := 0
 	for i, line := range lines {
 		line = strings.TrimSpace(line)
 
 		// in the header section: from --- to ---
 		if headerState == 1 {
-			colonIndex = strings.Index(line, ":")
+			colonIndex := strings.Index(line, ":")
 			if colonIndex > 0 {
 				key := strings.TrimSpace(line[:colonIndex])
 				value := strings.TrimSpace(line[colonIndex+1:])
 				// remove surrounding quotes
 				value = strings.Trim(value, "\"")
 				switch key {
-				case "title":
+				case "Title":
 					d.Title = value
-				case "date":
+				case "Date":
 					d.Date, _ =
 						time.Parse("2006-01-02", value)
 				default:
@@ -87,14 +88,33 @@ func (d *Document) parseHeader(data []byte) int {
 
 func (d *Document) parseContents(data []byte, startLine int) {
 	lines := strings.Split(string(data), "\n")
-	contents = strings.Join(lines[startLine:], "\n")
+	contents := strings.Join(lines[startLine:], "\n")
 	d.RawBody = contents
 }
 
-func (d *Document) RenderHTML() {
-	text = []byte(d.RawBody)
-	d.HTMLBody = string(github_flavored_markdown.Markdown(text))
-}
+func (d *Document) RenderHTML(outDir string) {
+	text := []byte(d.RawBody)
+	d.HTMLBody = template.HTML(github_flavored_markdown.Markdown(text))
+	base := strings.TrimSuffix(d.InputFile, filepath.Ext(d.InputFile))
+	htmlFile := strings.Join([]string{base, "html"}, ".")
+	htmlPath := filepath.Join(outDir, htmlFile)
 
-func (d Document) Save(outDir string) {
+	f, err := os.Create(htmlPath)
+	if err != nil {
+		log.Fatalf("Couldn't open '%s' : %s\n", htmlPath, err)
+	}
+	defer f.Close()
+
+	baseTemplate := "views/base.html"
+	t, err := template.ParseFiles(baseTemplate)
+	if err != nil {
+		log.Fatalf("Template '%s' parse error: %s\n", baseTemplate, err)
+	}
+	err = t.Execute(f, d)
+	if err != nil {
+		log.Fatalf("Template render error: %s\n", err)
+	}
+
+	// alternative approach:
+	// http://stackoverflow.com/questions/23124008/how-can-i-render-markdown-to-a-golang-templatehtml-or-tmpl-with-blackfriday
 }

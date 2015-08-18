@@ -6,6 +6,8 @@ import (
 	"github.com/spf13/cobra"
 
 	"fmt"
+	"log"
+	"os"
 )
 
 type RenderCmdOpts struct {
@@ -34,11 +36,11 @@ func init() {
 }
 
 func (opts RenderCmdOpts) main(args []string) {
-	CheckExists(opts.outDir)
+	CheckExists(opts.OutDir)
 
 	for _, file := range args {
 		fmt.Println("Processing --", file)
-		CheckExists(inputFile)
+		CheckExists(file)
 		render.RenderFile(file, opts.OutDir)
 	}
 

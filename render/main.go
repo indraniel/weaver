@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"path/filepath"
-	"time"
 )
 
 func RenderFile(inputFile, outDir string) {
@@ -14,8 +13,10 @@ func RenderFile(inputFile, outDir string) {
 	switch extension {
 	case ".md":
 		fmt.Println("Going to render straight up markdown")
+		RenderMarkdownFile(inputFile, outDir)
 	case ".mkdn":
 		fmt.Println("Going to render straight up markdown")
+		RenderMarkdownFile(inputFile, outDir)
 	case ".Rmd":
 		fmt.Println("Going to render RMarkdown")
 	case ".rmd":
@@ -38,6 +39,5 @@ func RenderRMarkdownFile(inputFile, outDir string) {
 func RenderMarkdownFile(inputFile, outDir string) {
 	doc := NewDocument(inputFile)
 	doc.ParseDocument()
-	doc.RenderHTML()
-	doc.Save(outDir)
+	doc.RenderHTML(outDir)
 }
