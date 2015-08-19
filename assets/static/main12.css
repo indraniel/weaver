@@ -54,6 +54,7 @@ h2, h3, h4, h5, h6 {
     font-size: 0.9em;
     font-weight: 400;
     color: #f1e0d4;
+    text-align: center;
 }
 
 #masthead h1 {
@@ -85,7 +86,7 @@ article {
     margin-top: 6em;
 }
 
-    article header { color: #888; }
+    article header { color: #888; text-align: center; }
     article header p { margin: 0; }
     article header a { text-decoration: none; }
 
