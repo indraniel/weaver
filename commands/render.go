@@ -2,12 +2,11 @@ package commands
 
 import (
 	"github.com/indraniel/weaver/render"
+	"github.com/indraniel/weaver/utils"
 
 	"github.com/spf13/cobra"
 
 	"fmt"
-	"log"
-	"os"
 )
 
 type RenderCmdOpts struct {
@@ -36,25 +35,16 @@ func init() {
 }
 
 func (opts RenderCmdOpts) main(args []string) {
-	CheckExists(opts.OutDir)
+	utils.CheckExists(opts.OutDir)
 
 	for _, file := range args {
 		fmt.Println("Processing --", file)
-		CheckExists(file)
 		render.RenderFile(file, opts.OutDir)
+		utils.CheckExists(file)
 	}
 
 	fmt.Println("All Done!")
 }
 
 func (opts RenderCmdOpts) processOpts() {
-}
-
-func CheckExists(file string) {
-	if _, err := os.Stat(file); os.IsNotExist(err) {
-		log.Fatalf(
-			"Could not find '%d' on file system: %s",
-			file, err,
-		)
-	}
 }

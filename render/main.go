@@ -1,6 +1,8 @@
 package render
 
 import (
+	"github.com/indraniel/weaver/utils"
+
 	"fmt"
 	"log"
 	"path/filepath"
