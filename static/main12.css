@@ -182,10 +182,11 @@ sup, sub {
 sup { bottom: 0.5ex; }
 sub { top: .5ex; }
 
-pre {
+code, pre {
+    font-family: 'Inconsolata';
     font-size: 11px;
-    background-color: #eee;
-    padding: 1em;
+    background-color: #dde1ef;
+    padding: 0.2em;
     overflow: auto;
 }
 
