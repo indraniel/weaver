@@ -210,7 +210,7 @@ sup { bottom: 0.5ex; }
 sub { top: .5ex; }
 
 code, pre {
-    font-family: 'Inconsolata';
+    font-family: 'Monaco', 'Inconsolata';
     font-size: 11px;
     background-color: #dde1ef;
     padding: 0.2em;
