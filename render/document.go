@@ -107,7 +107,7 @@ func (d *Document) RenderHTML(outDir string) {
 	}
 	defer f.Close()
 
-	baseTemplate := "views/base.html"
+	baseTemplate := "assets/views/base.html"
 	t, err := template.ParseFiles(baseTemplate)
 	if err != nil {
 		log.Fatalf("Template '%s' parse error: %s\n", baseTemplate, err)
