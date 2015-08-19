@@ -36,8 +36,10 @@
                 <header>
                     <h2>Start of Section</h2>
                     <p>
-                        <time datetime='{{ .Date.Format "2006-01-02" }}' pubdate="pubdate">{{ .Date.Format "2006-01-02" }}</time>
+                        ∞ 
+                        Created: <time datetime='{{ .Date.Format "2006-01-02T15:04:05Z" }}' pubdate="pubdate">{{ .Date.Format "2006-01-02" }}</time>
                         &bull;
+                        Updated: <time datetime='{{ .Updated.Format "2006-01-02T15:04:05Z" }}' pubdate="pubdate">{{ .Updated.Format "2006-01-02" }}</time>
                         ∞ 
                     </p>
                 </header>

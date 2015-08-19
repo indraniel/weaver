@@ -21,6 +21,7 @@ type Document struct {
 	HTMLBody  template.HTML
 	FullHTML  string
 	Date      time.Time
+	Updated   time.Time
 	Params    map[string]string
 }
 
@@ -33,6 +34,7 @@ func NewDocument(inputFile string) *Document {
 		InputFile: inputFile,
 		BaseName:  basename,
 		Date:      time.Now(),
+		Updated:   time.Now(),
 		Params:    make(map[string]string),
 	}
 	return doc
@@ -68,6 +70,9 @@ func (d *Document) parseHeader(data []byte) int {
 					d.Title = value
 				case "Date":
 					d.Date, _ =
+						time.Parse("2006-01-02", value)
+				case "Updated":
+					d.Updated, _ =
 						time.Parse("2006-01-02", value)
 				default:
 					d.Params[key] = value
