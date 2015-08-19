@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 )
 
-func RenderFile(inputFile, outDir string) {
+func RenderFile(inputFile, outDir, rpkgsDir string, keep bool) {
 	fmt.Println("Rendering", inputFile)
 
 	extension := filepath.Ext(inputFile)
@@ -19,14 +19,27 @@ func RenderFile(inputFile, outDir string) {
 	case ".mkdn":
 		fmt.Println("Going to render straight up markdown")
 		RenderMarkdownFile(inputFile, outDir)
+	case ".markdown":
+		fmt.Println("Going to render straight up markdown")
+		RenderMarkdownFile(inputFile, outDir)
 	case ".Rmd":
 		fmt.Println("Going to render RMarkdown")
+		RenderRMarkdownFile(inputFile, outDir, rpkgsDir, keep)
 	case ".rmd":
 		fmt.Println("Going to render RMarkdown")
+		RenderRMarkdownFile(inputFile, outDir, rpkgsDir, keep)
 	case ".Rmkdn":
 		fmt.Println("Going to render RMarkdown")
+		RenderRMarkdownFile(inputFile, outDir, rpkgsDir, keep)
 	case ".rmkdn":
 		fmt.Println("Going to render RMarkdown")
+		RenderRMarkdownFile(inputFile, outDir, rpkgsDir, keep)
+	case ".Rmarkdown":
+		fmt.Println("Going to render RMarkdown")
+		RenderRMarkdownFile(inputFile, outDir, rpkgsDir, keep)
+	case ".rmarkdown":
+		fmt.Println("Going to render RMarkdown")
+		RenderRMarkdownFile(inputFile, outDir, rpkgsDir, keep)
 	default:
 		log.Fatalf("Don't know how to render file of type: '%s'",
 			extension,
@@ -34,8 +47,14 @@ func RenderFile(inputFile, outDir string) {
 	}
 }
 
-func RenderRMarkdownFile(inputFile, outDir string) {
-	log.Fatal("Please implement me!")
+func RenderRMarkdownFile(inputFile, outDir, rpkgsDir string, keep bool) {
+	SetupRLIBSPath(rpkgsDir)
+	rdoc := NewRDocument(inputFile, outDir)
+	outputMD := rdoc.KnitR()
+	RenderMarkdownFile(outputMD, outDir)
+	if keep == false {
+		utils.Cleanup(outputMD)
+	}
 }
 
 func RenderMarkdownFile(inputFile, outDir string) {

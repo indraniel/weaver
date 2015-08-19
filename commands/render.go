@@ -10,7 +10,9 @@ import (
 )
 
 type RenderCmdOpts struct {
-	OutDir string
+	OutDir   string
+	RpkgsDir string
+	Keep     bool
 }
 
 var RenderOpts RenderCmdOpts
@@ -32,6 +34,23 @@ func init() {
 		".",
 		"the directory to output HTML to (default '.')",
 	)
+
+	cmdRender.Flags().StringVarP(
+		&RenderOpts.RpkgsDir,
+		"rpkgs",
+		"r",
+		"",
+		"the directory to use R packages from"+
+			"(overrides R_LIBS environment variable)",
+	)
+
+	cmdRender.Flags().BoolVarP(
+		&RenderOpts.Keep,
+		"keep",
+		"k",
+		false,
+		"keep the intermediary files on the file system",
+	)
 }
 
 func (opts RenderCmdOpts) main(args []string) {
@@ -39,8 +58,8 @@ func (opts RenderCmdOpts) main(args []string) {
 
 	for _, file := range args {
 		fmt.Println("Processing --", file)
-		render.RenderFile(file, opts.OutDir)
 		utils.CheckExists(file)
+		render.RenderFile(file, opts.OutDir, opts.RpkgsDir, opts.Keep)
 	}
 
 	fmt.Println("All Done!")
