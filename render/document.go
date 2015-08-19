@@ -1,6 +1,8 @@
 package render
 
 import (
+	"github.com/shurcooL/github_flavored_markdown"
+
 	"html/template"
 	"io/ioutil"
 	"log"
@@ -9,8 +11,6 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
-
-	"github.com/shurcooL/github_flavored_markdown"
 )
 
 type Document struct {
@@ -23,9 +23,6 @@ type Document struct {
 	Date      time.Time
 	Updated   time.Time
 	Params    map[string]string
-}
-
-func ParseMarkdownFile(inputFile string) {
 }
 
 func NewDocument(inputFile string) *Document {
