@@ -5,6 +5,7 @@ import (
 
 	"fmt"
 	"log"
+	"os"
 	"path/filepath"
 )
 
@@ -61,4 +62,26 @@ func RenderMarkdownFile(inputFile, outDir string) {
 	doc := NewDocument(inputFile)
 	doc.ParseDocument()
 	doc.RenderHTML(outDir)
+}
+
+func SetupRLIBSPath(rpkgsDir string) {
+	if rpkgsDir != "" {
+		utils.CheckExists(rpkgsDir)
+		if err := os.Setenv("R_LIBS", rpkgsDir); err != nil {
+			log.Fatalf(
+				"Could not set R_LIBS: %s",
+				err,
+			)
+		}
+	}
+
+	Rlibs := os.Getenv("R_LIBS")
+	if Rlibs == "" {
+		log.Fatalln(
+			"Environment Variable 'R_LIBS' isn't set.  ",
+			"Either set it, or use '--rpkgs'",
+		)
+	}
+
+	utils.CheckExists(Rlibs)
 }
