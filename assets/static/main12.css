@@ -211,7 +211,7 @@ sub { top: .5ex; }
 
 code, pre {
     font-family: 'Monaco', 'Inconsolata';
-    font-size: 11px;
+    font-size: 12px;
     background-color: #dde1ef;
     padding: 0.2em;
     overflow: auto;
