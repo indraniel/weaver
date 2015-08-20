@@ -14,6 +14,13 @@ func CheckExists(file string) {
 	}
 }
 
+func DoesExist(path string) bool {
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		return false
+	}
+	return true
+}
+
 func Cleanup(file string) {
 	if err := os.Remove(file); err != nil {
 		log.Fatalf(
