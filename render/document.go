@@ -99,7 +99,7 @@ func (d *Document) parseContents(data []byte, startLine int) {
 func (d *Document) RenderHTML(outDir string) {
 	text := []byte(d.RawBody)
 	d.HTMLBody = template.HTML(github_flavored_markdown.Markdown(text))
-	base := strings.TrimSuffix(d.InputFile, filepath.Ext(d.InputFile))
+	base := strings.TrimSuffix(d.BaseName, filepath.Ext(d.InputFile))
 	htmlFile := strings.Join([]string{base, "html"}, ".")
 	htmlPath := filepath.Join(outDir, htmlFile)
 
