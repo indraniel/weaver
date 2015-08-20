@@ -3,9 +3,9 @@ package render
 import (
 	"github.com/indraniel/weaver/assets"
 
-	"github.com/arschles/go-bindata-html-template"
 	"github.com/shurcooL/github_flavored_markdown"
 
+	"html/template"
 	"io/ioutil"
 	"log"
 	"os"
