@@ -1,6 +1,7 @@
 package render
 
 import (
+	"github.com/indraniel/weaver/assets"
 	"github.com/indraniel/weaver/utils"
 
 	"log"
@@ -44,7 +45,10 @@ func (r RDocument) checkR() {
 }
 
 func (r RDocument) knit() {
-	prgrm := "assets/Rscripts/knit.r"
+	script := assets.NewRScript("knit.r")
+	defer script.Remove()
+
+	prgrm := script.WriteWrapper()
 	args := []string{"--input", r.InputFile, "--outdir", r.OutDir}
 	log.Printf("Running: %s %s", prgrm, strings.Join(args, " "))
 	cmd := exec.Command(prgrm, args...)

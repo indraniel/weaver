@@ -1,9 +1,11 @@
 package render
 
 import (
+	"github.com/indraniel/weaver/assets"
+
+	"github.com/arschles/go-bindata-html-template"
 	"github.com/shurcooL/github_flavored_markdown"
 
-	"html/template"
 	"io/ioutil"
 	"log"
 	"os"
@@ -107,8 +109,9 @@ func (d *Document) RenderHTML(outDir string) {
 	}
 	defer f.Close()
 
-	baseTemplate := "assets/views/base.html"
-	t, err := template.ParseFiles(baseTemplate)
+	baseTemplate := "views/base.html"
+	t := assets.NewView(baseTemplate).GetTemplate()
+	t, err = t.ParseFiles(baseTemplate)
 	if err != nil {
 		log.Fatalf("Template '%s' parse error: %s\n", baseTemplate, err)
 	}

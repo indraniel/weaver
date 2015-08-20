@@ -1,6 +1,7 @@
 package rsetup
 
 import (
+	"github.com/indraniel/weaver/assets"
 	"github.com/indraniel/weaver/utils"
 
 	"log"
@@ -44,7 +45,11 @@ func setupDir(dir string) {
 
 func installPackages(installType string) {
 	log.Println("Installing R packages")
-	prgrm := "assets/Rscripts/install-packages.r"
+
+	script := assets.NewRScript("install-packages.r")
+	defer script.Remove()
+
+	prgrm := script.WriteWrapper()
 	args := []string{installType}
 	log.Printf("Running: %s %s", prgrm, strings.Join(args, " "))
 	cmd := exec.Command(prgrm, args...)
