@@ -29,3 +29,13 @@ func Cleanup(file string) {
 		)
 	}
 }
+
+func MakeDirs(path string, perms os.FileMode) {
+	err := os.MkdirAll(path, perms)
+	if err != nil {
+		log.Fatalf(
+			"Trouble creating path: '%s' (%#o) : %s",
+			path, perms, err,
+		)
+	}
+}

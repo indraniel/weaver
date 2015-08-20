@@ -18,13 +18,7 @@ func SetupRPackages(pkgDir, installType string) {
 func setupDir(dir string) {
 	if utils.DoesExist(dir) == false {
 		log.Printf("Creating directory: %s", dir)
-		err := os.MkdirAll(dir, 0755)
-		if err != nil {
-			log.Fatalf(
-				"Trouble creating directory: '%s' : %s",
-				dir, err,
-			)
-		}
+		utils.MakeDirs(dir, 0755)
 	}
 
 	log.Printf("Setting R_LIBS to: %s", dir)
