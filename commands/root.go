@@ -10,7 +10,7 @@ import (
 var version string
 
 var rootCmd = &cobra.Command{
-	Use:   "knitttr",
+	Use:   "weaver",
 	Short: "A Markdown/knitr utility",
 	Long:  "A tool to generate HTML documents from Markdown/RMarkdown",
 	Run: func(cmd *cobra.Command, args []string) {
