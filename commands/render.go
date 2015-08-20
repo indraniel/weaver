@@ -37,7 +37,7 @@ func init() {
 
 	cmdRender.Flags().StringVarP(
 		&RenderOpts.RpkgsDir,
-		"rpkgs",
+		"rlibs",
 		"r",
 		"",
 		"the directory to use R packages from"+
@@ -54,7 +54,7 @@ func init() {
 }
 
 func (opts RenderCmdOpts) main(args []string) {
-	utils.CheckExists(opts.OutDir)
+	opts.processOpts()
 
 	for _, file := range args {
 		fmt.Println("Processing --", file)
@@ -66,4 +66,5 @@ func (opts RenderCmdOpts) main(args []string) {
 }
 
 func (opts RenderCmdOpts) processOpts() {
+	utils.CheckExists(opts.OutDir)
 }

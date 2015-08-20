@@ -79,7 +79,7 @@ func SetupRLIBSPath(rpkgsDir string) {
 	if Rlibs == "" {
 		log.Fatalln(
 			"Environment Variable 'R_LIBS' isn't set.  ",
-			"Either set it, or use '--rpkgs'",
+			"Either set it, or use '--rlibs'",
 		)
 	}
 
