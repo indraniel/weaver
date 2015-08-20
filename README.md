@@ -17,6 +17,10 @@ The `assets/assets.go` file embeds the HTML templates and R scripts used by `wea
     go generate -x ./assets
     less assets/assets.go
 
+# LICENSE
+
+ISC
+
 
 [1]:  https://www.r-project.org
 [2]:  https://github.com/jteeuwen/go-bindata
