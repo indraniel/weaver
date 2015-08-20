@@ -12,6 +12,11 @@ import (
 func RenderFile(inputFile, outDir, rpkgsDir string, keep bool) {
 	fmt.Println("Rendering", inputFile)
 
+	if utils.DoesExist(outDir) == false {
+		utils.MakeDirs(outDir, 0755)
+		log.Println("Created output directory:", outDir)
+	}
+
 	extension := filepath.Ext(inputFile)
 	switch extension {
 	case ".md":

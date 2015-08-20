@@ -66,5 +66,4 @@ func (opts RenderCmdOpts) main(args []string) {
 }
 
 func (opts RenderCmdOpts) processOpts() {
-	utils.CheckExists(opts.OutDir)
 }
