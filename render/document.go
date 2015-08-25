@@ -3,7 +3,7 @@ package render
 import (
 	"github.com/indraniel/weaver/assets"
 
-	"github.com/shurcooL/github_flavored_markdown"
+	"github.com/indraniel/github_flavored_markdown"
 
 	"html/template"
 	"io/ioutil"
