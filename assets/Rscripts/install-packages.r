@@ -93,7 +93,7 @@ dev.install <- function() {
 # informative display
 display.installs <- function() {
   dir <- Sys.getenv(c("R_LIBS"))
-  pkgs <- installed.packages(lib.loc="./rpkgs")
+  pkgs <- installed.packages(lib.loc=dir)
   print(pkgs[,c("Package", "Version", "Depends")])
 }
 
