@@ -18,7 +18,7 @@ install.package.version <- function(
     }
   }
 
-  con <- gzcon(url(sprintf("%s/src/contrib/Archive.rds", repos), "rb"))
+  con <- gzcon(url(sprintf("%s/src/contrib/Meta/archive.rds", repos), "rb"))
   archive <- readRDS(con)
   close(con)
 
@@ -26,6 +26,7 @@ install.package.version <- function(
     stop(sprintf("couldn't find package '%s'", package))
   }
   info <- archive[[package]]
+  available.package.versions <- rownames(info)
 
   if (is.null(version)) {
     # Just grab the latest one. This will only happen if the package
@@ -33,17 +34,12 @@ install.package.version <- function(
     package.path <- info[length(info)]
   } else {
     package.path <- paste(package, "/", package, "_", version, ".tar.gz", sep="")
-    if (!(package.path %in% info)) {
+    if (!(package.path %in% available.package.versions)) {
       stop(sprintf("version '%s' is invalid for package '%s'", version, package))
     }
   }
   package.url <- sprintf("%s/src/contrib/Archive/%s", repos, package.path)
-  local.path <- file.path(tempdir(), basename(package.path))
-  if (download.file(package.url, local.path) != 0) {
-    stop("couldn't download file: ", package.url)
-  }
-
-  install.packages(local.path, repos = repos, type = type)
+  install.packages(package.url, repos = NULL)
 }
 
 # Standard install
