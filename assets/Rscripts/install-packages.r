@@ -47,6 +47,7 @@ std.install <- function() {
   install.packages("knitr", repos="http://cran.wustl.edu")
   install.packages("rjson", repos="http://cran.wustl.edu")
   install.packages("ggplot2", repos="http://cran.wustl.edu")
+  install.package("gridExtra", repos="http://cran.wustl.edu")
   install.packages("optparse", repos="http://cran.wustl.edu")
 }
 
@@ -76,6 +77,7 @@ pinned.install <- function() {
   install.package.version("scales", version="0.2.5", repos="http://cran.wustl.edu")
   install.package.version("proto", version="0.3-10", repos="http://cran.wustl.edu")
   install.package.version("ggplot2", version="1.0.1", repos="http://cran.wustl.edu")
+  install.package.version("gridExtra", version="2.0.0", repos="http://cran.wustl.edu")
   install.package.version("getopt", version="1.20.0", repos="http://cran.wustl.edu")
   install.package.version("optparse", version="1.3.0", repos="http://cran.wustl.edu")
 }
@@ -87,6 +89,7 @@ dev.install <- function() {
   install_github("yihui/knitr", ref="master")
   install_github("alexcb/rjson/rjson", ref="master")
   install_github("hadley/ggplot2", ref="master")
+  install_github("baptiste/gridextra", ref="master")
   install_github("trevorld/optparse", ref="master")
 }
 
